@@ -1,7 +1,7 @@
 # ICS_FileFilterer
 This script allows to filter events of multiple `.ics` files and create a new file with all the filtered events of the 
 input files.
----
+
 ## Run instructions
 All the settings are editable in the `settings.json` file:
 * `calendar_files`: here you can put the path of every 
