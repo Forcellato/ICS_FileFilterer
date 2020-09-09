@@ -1,0 +1,45 @@
+{
+  "calendar_files": [
+    "/home/force/Documents/orari_primo_semestre/CT0066_274952.ics",
+    "/home/force/Documents/orari_primo_semestre/CT0090_274938.ics",
+    "/home/force/Documents/orari_primo_semestre/CT0111_306312.ics",
+    "/home/force/Documents/orari_primo_semestre/CT0120_274932.ics",
+    "/home/force/Documents/orari_primo_semestre/CT0178_274943.ics",
+    "/home/force/Documents/orari_primo_semestre/CT0373_274945.ics",
+    "/home/force/Documents/orari_primo_semestre/CT0374_274944.ics",
+    "/home/force/Documents/orari_primo_semestre/CT0429_274936.ics",
+    "/home/force/Documents/orari_primo_semestre/CT0509_337525.ics",
+    "/home/force/Documents/orari_primo_semestre/CT0539_320436.ics",
+    "/home/force/Documents/orari_primo_semestre/CT0540_320438.ics",
+    "/home/force/Documents/orari_primo_semestre/CT0582_337226.ics"
+  ],
+  "conditions": {
+    "location": {
+      "in": [],
+      "not_in": []
+    },
+    "summaries": {
+      "in": [],
+      "not_in": []
+    },
+    "descriptions": {
+      "in": [],
+      "not_in": []
+    },
+    "dtstarts": {
+      "in": [],
+      "not_in": []
+    },
+    "dtends": {
+      "in": [],
+      "not_in": []
+    },
+    "exdates": {
+      "in": [],
+      "not_in": []
+    }
+  },
+  "verbose": true,
+  "cursor": "logger:~$ ",
+  "output_file": "/home/force/Desktop/output.ics"
+}
