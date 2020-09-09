@@ -5,6 +5,12 @@ from calendar_manager.logger import Logger
 
 
 def filter_events(cal, condition: Condition):
+    """
+    Function that filters all the events of a given calendar
+    :param cal: calendar to be filtered
+    :param condition: custom condition that needs to be checked
+    :return: list of filtered elements
+    """
     events = []
     for component in cal.walk():
         if component.name == 'VEVENT':
@@ -29,6 +35,11 @@ def filter_events(cal, condition: Condition):
 
 
 def files_to_calendar(file_list):
+    """
+    Function that open multiple files and returns the list of opened files and the list of calendar created
+    :param file_list: list of .ics input files that contains all the events
+    :return: list of created calendars, list of opened files
+    """
     c_list = []
     f_list = []
     for f in file_list:
@@ -38,6 +49,12 @@ def files_to_calendar(file_list):
 
 
 def create_ics_file(event_list, file_name, logger=Logger(False)):
+    """
+    Function that creates the output files that contains all the filtered events
+    :param event_list: list of events to be printed on the file
+    :param file_name: output file name
+    :param logger: object that is useful to print debugging info
+    """
     f = open(file_name, 'wb')
     cal = Calendar()
     for event in event_list:
