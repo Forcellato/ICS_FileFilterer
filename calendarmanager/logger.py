@@ -1,5 +1,15 @@
+global global_logger
+
+DEF_CURSOR = '> '
+
+
+def init(verbose, cursor=DEF_CURSOR):
+    global global_logger
+    global_logger = Logger(verbose, cursor)
+
+
 class Logger:
-    def __init__(self, verbose, cursor='> '):
+    def __init__(self, verbose, cursor=DEF_CURSOR):
         self.verbose = verbose
         self.cursor = cursor
         self.formatting = {
@@ -20,9 +30,9 @@ class Logger:
         :param string: message that needs to be printed
         """
         if self.verbose:
-            print(f'{form}{self.cursor}{string}{self.formatting["end"]}')
+            print(f'{self.cursor}{form}{string}{self.formatting["end"]}')
 
-    def log(self, string: str):
+    def log_ok(self, string: str):
         """
         This function prints a given message in the default green style
         :param string: message that needs to be printed
@@ -35,6 +45,13 @@ class Logger:
         :param string: message that needs to be printed
         """
         self.__log_general(self.formatting['warning'], string)
+
+    def log_default(self, string: str):
+        """
+        This function prints a given message in the default warning style
+        :param string: message that needs to be printed
+        """
+        self.__log_general('', string)
 
     def log_error(self, string: str):
         """

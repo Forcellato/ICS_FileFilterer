@@ -1,9 +1,16 @@
 from icalendar import Calendar
-
-from calendar_manager.condition import Condition
-from calendar_manager.logger import Logger
+from calendarmanager import logger
+from calendarmanager.condition import Condition
 from requests import get
 import re
+
+IS_URL_REGEX = re.compile(
+    r'^(?:http|ftp)s?://'  # http:// or https://
+    r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
+    r'localhost|'  # localhost...
+    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
+    r'(?::\d+)?'  # optional port
+    r'(?:/?|[/?]\S+)$', re.IGNORECASE)
 
 
 def filter_events(cal, condition: Condition):
@@ -33,18 +40,18 @@ def filter_events(cal, condition: Condition):
                     and condition.check_exdates(exdate) \
                     and condition.check_summaries(summary):
                 events.append(component)
+    logger.global_logger.log_info(f'Event filtered. Before: {len(cal.walk())}, after: {len(events)}.')
     return events
 
 
 def is_url(string):
-    regex = re.compile(
-        r'^(?:http|ftp)s?://'  # http:// or https://
-        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
-        r'localhost|'  # localhost...
-        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
-        r'(?::\d+)?'  # optional port
-        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
-    return re.match(regex, string) is not None
+    """
+    Function used to check if a string is a valid URL
+    :param string: element to be checked
+    :return: True if string is an URL, False otherwise
+    """
+    global IS_URL_REGEX
+    return re.match(IS_URL_REGEX, string) is not None
 
 
 def files_to_calendar(file_list):
@@ -56,21 +63,25 @@ def files_to_calendar(file_list):
     c_list = []
     f_list = []
     for f in file_list:
+        logger.global_logger.log_info(f'Loading {f} calendar.')
         if is_url(f):
             r = get(f, allow_redirects=True)
             c_list.append(Calendar.from_ical(r.content))
         else:
-            f_list.append(open(f, 'rb'))
-            c_list.append(Calendar.from_ical(f_list[len(f_list) - 1].read()))
+            try:
+                f_list.append(open(f, 'rb'))
+                c_list.append(Calendar.from_ical(f_list[len(f_list) - 1].read()))
+            except FileNotFoundError:
+                logger.global_logger.log_error(f'File {f} not found. Change the name of the file in settings.json.')
+    logger.global_logger.log_info(f'Loaded {len(c_list)}/{len(file_list)} calendars successfully.')
     return c_list, f_list
 
 
-def create_ics_file(event_list, file_name, logger=Logger(False)):
+def create_ics_file(event_list, file_name):
     """
     Function that creates the output files that contains all the filtered events
     :param event_list: list of events to be printed on the file
     :param file_name: output file name
-    :param logger: object that is useful to print debugging info
     """
     f = open(file_name, 'wb')
     cal = Calendar()
@@ -78,4 +89,4 @@ def create_ics_file(event_list, file_name, logger=Logger(False)):
         cal.add_component(event)
     f.write(cal.to_ical())
     f.close()
-    logger.log('ICS file created.\t')
+    logger.global_logger.log_ok('ICS file created.\t')
