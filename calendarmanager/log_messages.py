@@ -2,6 +2,10 @@ global messages
 
 
 def init(settings):
+    """
+    Function to initialize the global object that contains all the messages
+    :param settings: this contains all the languages with all the default sentences per language
+    """
     global messages
     messages = Messages(settings)
 

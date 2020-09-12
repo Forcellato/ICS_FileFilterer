@@ -1,4 +1,8 @@
 {
+  "verbose": true,
+  "cursor": "logger:~$ ",
+  "output_file": "/home/force/Documents/output.ics",
+  "language": "ita",
   "calendar_files": [
     "https://www.unive.it/data/ajax/Didattica/generaics?cache=-1&afid=274944",
     "https://www.unive.it/data/ajax/Didattica/generaics?cache=-1&afid=274952",
@@ -7,8 +11,6 @@
     "https://www.unive.it/data/ajax/Didattica/generaics?cache=-1&afid=274932",
     "https://www.unive.it/data/ajax/Didattica/generaics?cache=-1&afid=320436",
     "https://www.unive.it/data/ajax/Didattica/generaics?cache=-1&afid=306312",
-    "ijijioj",
-    "/home/force/Documents/orari_primo_semestre/CT0066_274952.ics"
   ],
   "conditions": {
     "location": {
@@ -36,10 +38,6 @@
       "not_in": []
     }
   },
-  "verbose": true,
-  "cursor": "logger:~$ ",
-  "output_file": "/home/force/Desktop/output.ics",
-  "language": "ita",
   "log_messages": {
     "eng": {
       "load_calendar": "Calendars loaded.",
