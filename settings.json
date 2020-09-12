@@ -1,17 +1,12 @@
 {
   "calendar_files": [
-    "/home/force/Documents/orari_primo_semestre/CT0066_274952.ics",
-    "/home/force/Documents/orari_primo_semestre/CT0090_274938.ics",
-    "/home/force/Documents/orari_primo_semestre/CT0111_306312.ics",
-    "/home/force/Documents/orari_primo_semestre/CT0120_274932.ics",
-    "/home/force/Documents/orari_primo_semestre/CT0178_274943.ics",
-    "/home/force/Documents/orari_primo_semestre/CT0373_274945.ics",
-    "/home/force/Documents/orari_primo_semestre/CT0374_274944.ics",
-    "/home/force/Documents/orari_primo_semestre/CT0429_274936.ics",
-    "/home/force/Documents/orari_primo_semestre/CT0509_337525.ics",
-    "/home/force/Documents/orari_primo_semestre/CT0539_320436.ics",
-    "/home/force/Documents/orari_primo_semestre/CT0540_320438.ics",
-    "/home/force/Documents/orari_primo_semestre/CT0582_337226.ics"
+    "https://www.unive.it/data/ajax/Didattica/generaics?cache=-1&afid=274944",
+    "https://www.unive.it/data/ajax/Didattica/generaics?cache=-1&afid=274952",
+    "https://www.unive.it/data/ajax/Didattica/generaics?cache=-1&afid=274938",
+    "https://www.unive.it/data/ajax/Didattica/generaics?cache=-1&afid=274945",
+    "https://www.unive.it/data/ajax/Didattica/generaics?cache=-1&afid=274932",
+    "https://www.unive.it/data/ajax/Didattica/generaics?cache=-1&afid=320436",
+    "https://www.unive.it/data/ajax/Didattica/generaics?cache=-1&afid=306312"
   ],
   "conditions": {
     "location": {

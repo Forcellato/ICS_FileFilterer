@@ -2,6 +2,8 @@ from icalendar import Calendar
 
 from calendar_manager.condition import Condition
 from calendar_manager.logger import Logger
+from requests import get
+import re
 
 
 def filter_events(cal, condition: Condition):
@@ -34,6 +36,17 @@ def filter_events(cal, condition: Condition):
     return events
 
 
+def is_url(string):
+    regex = re.compile(
+        r'^(?:http|ftp)s?://'  # http:// or https://
+        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
+        r'localhost|'  # localhost...
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
+        r'(?::\d+)?'  # optional port
+        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+    return re.match(regex, string) is not None
+
+
 def files_to_calendar(file_list):
     """
     Function that open multiple files and returns the list of opened files and the list of calendar created
@@ -43,8 +56,12 @@ def files_to_calendar(file_list):
     c_list = []
     f_list = []
     for f in file_list:
-        f_list.append(open(f, 'rb'))
-        c_list.append(Calendar.from_ical(f_list[len(f_list) - 1].read()))
+        if is_url(f):
+            r = get(f, allow_redirects=True)
+            c_list.append(Calendar.from_ical(r.content))
+        else:
+            f_list.append(open(f, 'rb'))
+            c_list.append(Calendar.from_ical(f_list[len(f_list) - 1].read()))
     return c_list, f_list
 
 
