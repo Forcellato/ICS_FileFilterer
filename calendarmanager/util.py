@@ -1,6 +1,6 @@
 import json
 
-from calendarmanager import logger
+from calendarmanager import logger, log_messages
 
 
 def json_parser(file_name):
@@ -17,7 +17,7 @@ def json_parser(file_name):
             str_help = str_help + line.strip()
         f.close()
     except FileNotFoundError:
-        logger.global_logger.log_error(f'File {file_name} not found. Change the name of the file in settings.json.')
+        logger.global_logger.log_error(log_messages.messages.file_not_found % file_name)
     return json.loads(str_help)
 
 
@@ -28,5 +28,10 @@ def event_printer(events):
     """
     for event in events:
         logger.global_logger.log_default(
-            f"{event.get('dtstart').dt.strftime('%D %H:%M UTC')}-{event.get('dtend').dt.strftime('%D %H:%M UTC')} "
-            f"{event.get('summary')}: {event.get('description')} - {event.get('location')}")
+            log_messages.messages.event % (
+                event.get('dtstart').dt.strftime('%D %H:%M UTC'),
+                event.get('dtend').dt.strftime('%D %H:%M UTC'),
+                event.get('summary'), event.get('description'),
+                event.get('location')
+            )
+        )

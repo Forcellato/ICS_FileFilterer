@@ -1,5 +1,5 @@
 from icalendar import Calendar
-from calendarmanager import logger
+from calendarmanager import logger, log_messages
 from calendarmanager.condition import Condition
 from requests import get
 import re
@@ -40,7 +40,7 @@ def filter_events(cal, condition: Condition):
                     and condition.check_exdates(exdate) \
                     and condition.check_summaries(summary):
                 events.append(component)
-    logger.global_logger.log_info(f'Event filtered. Before: {len(cal.walk())}, after: {len(events)}.')
+    logger.global_logger.log_info(log_messages.messages.events_filtered % (len(cal.walk()), len(events)))
     return events
 
 
@@ -63,7 +63,7 @@ def files_to_calendar(file_list):
     c_list = []
     f_list = []
     for f in file_list:
-        logger.global_logger.log_info(f'Loading {f} calendar.')
+        logger.global_logger.log_info(log_messages.messages.loading_file % f)
         if is_url(f):
             r = get(f, allow_redirects=True)
             c_list.append(Calendar.from_ical(r.content))
@@ -72,8 +72,8 @@ def files_to_calendar(file_list):
                 f_list.append(open(f, 'rb'))
                 c_list.append(Calendar.from_ical(f_list[len(f_list) - 1].read()))
             except FileNotFoundError:
-                logger.global_logger.log_error(f'File {f} not found. Change the name of the file in settings.json.')
-    logger.global_logger.log_info(f'Loaded {len(c_list)}/{len(file_list)} calendars successfully.')
+                logger.global_logger.log_error(log_messages.messages.file_not_found % f)
+    logger.global_logger.log_info(log_messages.messages.successful_calendars % (len(c_list), len(file_list)))
     return c_list, f_list
 
 
@@ -89,4 +89,4 @@ def create_ics_file(event_list, file_name):
         cal.add_component(event)
     f.write(cal.to_ical())
     f.close()
-    logger.global_logger.log_ok('ICS file created.\t')
+    logger.global_logger.log_ok(log_messages.messages.output_created)
